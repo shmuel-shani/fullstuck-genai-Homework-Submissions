@@ -1,0 +1,169 @@
+body {
+    font-family: Arial;
+    padding: 20px;
+}
+
+/* ================= TASK 1 ================= */
+
+.menu a {
+    background: lightblue;
+    padding: 10px;
+    margin: 10px;
+
+    /* שינוי חשוב */
+    display: inline-block;
+}
+
+/* div תמיד שובר שורה */
+.block-example {
+    background: lightgray;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+
+/* ================= TASK 2 ================= */
+
+.inherit-box {
+    color: blue;
+    border: 2px solid red;
+    padding: 10px;
+}
+
+/* גורם לכפתור לרשת את הצבע */
+.inherit-box button {
+    color: inherit;
+    font-family: inherit;
+}
+
+
+/* ================= TASK 3 ================= */
+
+.card {
+    width: 200px;
+    height: 200px;
+
+    background: lightyellow;
+
+    padding: 20px;      /* רווח פנימי */
+    border: 5px solid black;
+    margin: 30px;       /* רווח חיצוני */
+}
+
+
+/* ================= TASK 4 ================= */
+
+.box1 {
+    width: 250px;
+    padding: 30px;
+    border: 10px solid black;
+    background: lightgreen;
+
+    /* ברירת מחדל */
+    box-sizing: content-box;
+}
+
+.box2 {
+    width: 250px;
+    padding: 30px;
+    border: 10px solid black;
+    background: lightcoral;
+
+    /* חשוב */
+    box-sizing: border-box;
+}
+
+
+/* ================= TASK 5 ================= */
+
+.header {
+    height: 20vh;   /* 20% מהמסך */
+    width: 100vw;
+    background: lightblue;
+}
+
+.half {
+    width: 50%;
+    background: lightgray;
+}
+
+html {
+    font-size: 16px;
+}
+
+.title {
+    font-size: 2rem;  /* 32px */
+}
+
+.parent {
+    font-size: 20px;
+}
+
+.parent span {
+    font-size: 2em;   /* 40px */
+}
+
+
+/* ================= TASK 6 ================= */
+
+.layout {
+    display: flex;
+}
+
+.main {
+    width: 70%;
+    background: lightblue;
+}
+
+.sidebar {
+    width: 30%;
+    background: lightpink;
+}
+
+/* מובייל */
+@media (max-width: 768px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .main,
+    .sidebar {
+        width: 100%;
+    }
+}
+
+
+/* ================= TASK 7 ================= */
+
+/* sticky */
+.sticky {
+    position: sticky;
+    top: 0;
+    background: yellow;
+}
+
+/* relative + absolute */
+.parent-box {
+    width: 300px;
+    height: 300px;
+    background: lightgray;
+
+    position: relative;
+}
+
+.child-box {
+    width: 50px;
+    height: 50px;
+    background: red;
+
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+/* fixed */
+.fixed-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
