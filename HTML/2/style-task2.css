@@ -1,0 +1,61 @@
+/* ================= EXTERNAL CSS ================= */
+
+/* ================= LOCATION PRECEDENCE ================= */
+
+.location-box {
+    background-color: blue;
+
+    /*
+    זה EXTERNAL CSS
+
+    הוא הכי חלש מבין שלושת הסוגים:
+
+    External < Internal < Inline
+
+    לכן:
+    הוא יפסיד ל-green (internal)
+    והוא יפסיד גם ל-red (inline)
+    */
+}
+
+
+/* ================= SPECIFICITY ================= */
+
+div {
+    color: blue;
+
+    /*
+    זה selector לפי תג (TAG)
+
+    זה הכי חלש בהיררכיה:
+
+    Tag < Class < ID
+
+    לכן הוא יפסיד ל-class ול-ID
+    */
+}
+
+.spec-box {
+    color: green;
+
+    /*
+    זה CLASS
+
+    יותר חזק מ-TAG
+    אבל פחות חזק מ-ID
+    */
+}
+
+#specialBox {
+    color: red;
+
+    /*
+    זה ID
+
+    זה הכי חזק מבין השלושה:
+
+    ID > Class > Tag
+
+    לכן הוא ינצח ויהפוך את הטקסט לאדום
+    */
+}

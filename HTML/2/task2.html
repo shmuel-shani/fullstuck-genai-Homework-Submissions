@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Task 2 - CSS Precedence & Specificity</title>
+
+    <!-- ================= EXTERNAL CSS ================= -->
+    <!-- זה הקובץ החיצוני (External) -->
+    <link rel="stylesheet" href="style-task2.css">
+
+    <!-- ================= INTERNAL CSS ================= -->
+    <!-- זה CSS פנימי בתוך ה-HTML -->
+    <style>
+
+        /* ================= LOCATION PRECEDENCE ================= */
+
+        .location-box {
+            background-color: green;
+
+            /* 
+            זה INTERNAL CSS
+
+            כרגע הוא מנצח על ה-External (כחול),
+            אבל יפסיד ל-Inline (אדום)
+            */
+        }
+
+        /* ================= SPECIFICITY ================= */
+
+        div {
+            color: blue;
+
+            /*
+            זה selector לפי תג (TAG)
+            זה הכי חלש
+            */
+        }
+
+        .spec-box {
+            color: green;
+
+            /*
+            זה CLASS
+            יותר חזק מ-TAG
+            */
+        }
+
+        #specialBox {
+            color: red;
+
+            /*
+            זה ID
+            יותר חזק מ-CLASS ו-TAG
+            */
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Task 2 - CSS Precedence & Specificity</h1>
+
+
+    <!-- ================= PART 1 - LOCATION PRECEDENCE ================= -->
+
+    <h2>Part 1 - Location Precedence</h2>
+
+    <!-- 
+    כאן אנחנו שמים 3 סוגים של CSS על אותו אלמנט:
+
+    1. External → כחול
+    2. Internal → ירוק
+    3. Inline → אדום
+
+    מי ינצח? INLINE
+    -->
+
+    <div class="location-box" style="background-color: red; padding: 20px; color: white;">
+
+        This box is RED
+
+        <!-- 
+        הסבר:
+
+        Inline style מנצח כי:
+        Inline > Internal > External
+
+        כלומר:
+        red (inline) > green (internal) > blue (external)
+        -->
+
+    </div>
+
+
+    <!-- ================= PART 2 - SELECTOR SPECIFICITY ================= -->
+
+    <h2>Part 2 - Selector Specificity</h2>
+
+    <!-- 
+    כאן אנחנו משתמשים ב-3 סוגי selectors:
+
+    1. tag → div
+    2. class → .spec-box
+    3. id → #specialBox
+
+    מי ינצח? ID
+    -->
+
+    <div id="specialBox" class="spec-box">
+
+        This text is RED
+
+        <!-- 
+        הסבר:
+
+        ID selector (#specialBox) מנצח כי:
+
+        ID > Class > Tag
+
+        כלומר:
+        red (ID) > green (class) > blue (tag)
+        -->
+
+    </div>
+
+
+    <!-- ================= EXTRA EXPLANATION ================= -->
+
+    <h2>Summary</h2>
+
+    <p>
+        Location priority:
+        Inline > Internal > External
+    </p>
+
+    <p>
+        Specificity priority:
+        ID > Class > Tag
+    </p>
+
+</body>
+</html>
