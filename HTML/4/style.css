@@ -1,0 +1,387 @@
+/* ================= GENERAL SETTINGS ================= */
+
+/* גורם לכך ש-padding ו-border ייכנסו בתוך חישוב הרוחב והגובה */
+* {
+    box-sizing: border-box;
+}
+
+/* גלילה חלקה כשנלחץ על קישור שמוביל לאזור בעמוד */
+html {
+    scroll-behavior: smooth;
+}
+
+/* עיצוב כללי של כל העמוד */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #1f2937;
+}
+
+/* התוכן המרכזי של העמוד */
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* כל section הוא אזור נפרד בעמוד */
+.section {
+    margin-bottom: 55px;
+}
+
+/* כותרת של כל אזור */
+.section h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+
+/* ================= TASK 1 - NAVBAR ================= */
+
+/* navbar הוא סרגל הניווט העליון */
+.navbar {
+    display: flex;
+
+    /* שם את הלוגו בצד אחד ואת הקישורים בצד השני */
+    justify-content: space-between;
+
+    /* ממרכז את התוכן לגובה */
+    align-items: center;
+
+    padding: 18px 40px;
+    background-color: white;
+
+    /* צל עדין מתחת לניווט כדי שייראה מרחף */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+    /* גורם ל-navbar להישאר למעלה גם כשגוללים */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* עיצוב הלוגו */
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+/* הקונטיינר של הקישורים */
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+/* כל קישור בתפריט */
+.nav-links a {
+    text-decoration: none;
+    color: #1f2937;
+    padding: 10px 14px;
+    border-radius: 8px;
+
+    /* אנימציה חלקה לצבע הרקע ולתזוזה */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* מה קורה כשעוברים עם העכבר על קישור */
+.nav-links a:hover {
+    background-color: #e0f2fe;
+
+    /* מעלה את הקישור קצת למעלה */
+    transform: translateY(-3px);
+}
+
+
+/* ================= TASK 2 - RESPONSIVE PRODUCT GALLERY ================= */
+
+/* הקונטיינר של כל כרטיסי המוצרים */
+.product-container {
+    display: flex;
+
+    /* מאפשר לכרטיסים לרדת שורה כשאין מספיק מקום */
+    flex-wrap: wrap;
+
+    /* רווח בין הכרטיסים */
+    gap: 20px;
+}
+
+/* כל כרטיס מוצר */
+.product-card {
+    /* הרוחב ההתחלתי של כל כרטיס */
+    flex-basis: 250px;
+
+    /* אם יש מקום פנוי בשורה, הכרטיסים יגדלו */
+    flex-grow: 1;
+
+    /* אם המסך קטן, הכרטיסים יכולים להתכווץ */
+    flex-shrink: 1;
+
+    background-color: white;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+
+    /* צל לכרטיסים */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+}
+
+/* אזור התמונה בתוך הכרטיס */
+.image-wrapper {
+    position: relative;
+
+    /* גובה קבוע לאזור התמונה */
+    height: 180px;
+
+    /* מסתיר חלקים שיוצאים מהקופסה בזמן zoom */
+    overflow: hidden;
+
+    border-radius: 10px;
+    background-color: #f0f0f0;
+}
+
+/* התמונה עצמה */
+.product-image {
+    width: 100%;
+    height: 100%;
+
+    /* מציג את כל התמונה בלי לחתוך אותה */
+    object-fit: contain;
+
+    /* אנימציה חלקה של zoom */
+    transition: transform 0.3s ease;
+}
+
+/* כשעוברים עם העכבר על אזור התמונה, התמונה גדלה */
+.image-wrapper:hover .product-image {
+    transform: scale(1.1);
+}
+
+/* שכבת טקסט שמופיעה מעל התמונה */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: 1.2rem;
+
+    /* בהתחלה לא רואים את השכבה */
+    opacity: 0;
+
+    /* הופעה חלקה */
+    transition: opacity 0.3s ease;
+}
+
+/* כשהעכבר על התמונה, שכבת הטקסט מופיעה */
+.image-wrapper:hover .image-overlay {
+    opacity: 1;
+}
+
+/* שם המוצר */
+.product-card h3 {
+    margin: 14px 0 8px;
+}
+
+/* מחיר המוצר */
+.price {
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0 0 12px;
+}
+
+/* כפתור Buy */
+.buy-btn {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #2563eb;
+    color: white;
+
+    font-size: 1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    /* אנימציה לכפתור */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* מעבר עכבר על כפתור Buy */
+.buy-btn:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+
+/* ================= TASK 3 - LEADERBOARD TABLE ================= */
+
+/* div שעוטף את הטבלה ונותן לה מראה של כרטיס */
+.table-card {
+    background-color: white;
+    border-radius: 16px;
+
+    /* חשוב כדי שהפינות העגולות יעבדו גם על הטבלה */
+    overflow: hidden;
+
+    /* צל לכרטיס */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* הטבלה עצמה */
+table {
+    width: 100%;
+
+    /* מאחד גבולות של תאים ומונע רווחים ביניהם */
+    border-collapse: collapse;
+}
+
+/* תאי כותרת ותאי מידע */
+th,
+td {
+    padding: 16px;
+    text-align: left;
+}
+
+/* תאי הכותרת */
+th {
+    background-color: #111827;
+    color: white;
+}
+
+/* שורות הטבלה */
+tbody tr {
+    /* אנימציה חלקה לשינוי צבע */
+    transition: background-color 0.3s ease;
+}
+
+/* כשעוברים עם העכבר על שורה */
+tbody tr:hover {
+    background-color: #e0f2fe;
+}
+
+
+/* ================= TASK 4 - DASHBOARD WIDGET GRID ================= */
+
+/* הקונטיינר של הווידג׳טים */
+.dashboard-grid {
+    display: grid;
+
+    /* 3 עמודות שוות */
+    grid-template-columns: repeat(3, 1fr);
+
+    /* 2 שורות בגובה 160px */
+    grid-template-rows: 160px 160px;
+
+    /* רווח בין הווידג׳טים */
+    gap: 20px;
+}
+
+/* כל widget */
+.widget {
+    background-color: white;
+    border-radius: 16px;
+    padding: 20px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+
+    font-weight: bold;
+}
+
+/* ה-widget הראשון */
+.centered-widget {
+    display: grid;
+
+    /* ממקם את הטקסט בדיוק במרכז, גם לרוחב וגם לגובה */
+    place-items: center;
+
+    background-color: #2563eb;
+    color: white;
+}
+
+
+/* ================= POPUP ================= */
+
+/* הרקע הכהה שמכסה את כל המסך */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.6);
+
+    /* הפופאפ מוסתר בהתחלה */
+    display: none;
+
+    /* כשהוא מוצג, התוכן יהיה במרכז */
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100;
+}
+
+/* הקופסה הלבנה שבתוך הפופאפ */
+.popup-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* כפתור סגירת הפופאפ */
+.close-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+
+    background-color: #111827;
+    color: white;
+
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* כל מה שבתוך ה-media יקרה רק במסכים קטנים */
+@media (max-width: 700px) {
+
+    /* במובייל ה-navbar יהפוך לעמודה */
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* הקישורים יוכלו לרדת שורה */
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* במובייל ה-dashboard יהפוך לעמודה אחת */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 140px);
+    }
+}
