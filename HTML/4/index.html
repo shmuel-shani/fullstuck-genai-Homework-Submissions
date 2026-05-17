@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- מאפשר לדפדפן לקרוא תווים רגילים, עברית, אנגלית וסימנים -->
+    <meta charset="UTF-8">
+
+    <!-- גורם לעמוד להיראות טוב גם במובייל -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- השם שיופיע בלשונית של הדפדפן -->
+    <title>UI Components Homework</title>
+
+    <!-- מחבר את קובץ העיצוב החיצוני -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= TASK 1 - TOP NAVIGATION BAR ================= -->
+    <!-- nav הוא אזור ניווט עליון באתר -->
+    <nav class="navbar">
+
+        <!-- הלוגו בצד שמאל -->
+        <div class="logo">TechParts</div>
+
+        <!-- קבוצת הקישורים בצד ימין -->
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#products">Products</a>
+            <a href="#leaderboard">Leaderboard</a>
+            <a href="#dashboard">Dashboard</a>
+        </div>
+
+    </nav>
+
+
+    <!-- main מכיל את התוכן המרכזי של העמוד -->
+    <main>
+
+        <!-- ================= TASK 2 - RESPONSIVE PRODUCT GALLERY ================= -->
+        <section id="products" class="section">
+
+            <h2>Responsive Product Gallery</h2>
+
+            <!-- product-container הוא הקונטיינר של כל כרטיסי המוצרים -->
+            <!-- ב-CSS הוא יקבל display:flex כדי לסדר את הכרטיסים בשורה -->
+            <div class="product-container">
+
+                <!-- מוצר 1 -->
+                <div class="product-card">
+
+                    <!-- image-wrapper עוטף את התמונה ואת שכבת הטקסט שמופיעה ב-hover -->
+                    <div class="image-wrapper">
+                        <img src="public/Buzzer.jpg" alt="Buzzer" class="product-image">
+                        <div class="image-overlay">Buzzer</div>
+                    </div>
+
+                    <h3>Buzzer</h3>
+                    <p class="price">$19.99</p>
+
+                    <!-- onclick מפעיל פונקציית JavaScript בשם showPopup -->
+                    <button class="buy-btn" onclick="showPopup('Buzzer')">
+                        🛒 Buy
+                    </button>
+                </div>
+
+                <!-- מוצר 2 -->
+                <div class="product-card">
+                    <div class="image-wrapper">
+                        <img src="public/Fuse.jpg" alt="Fuse" class="product-image">
+                        <div class="image-overlay">Fuse</div>
+                    </div>
+
+                    <h3>Fuse</h3>
+                    <p class="price">$4.99</p>
+
+                    <button class="buy-btn" onclick="showPopup('Fuse')">
+                        🛒 Buy
+                    </button>
+                </div>
+
+                <!-- מוצר 3 -->
+                <div class="product-card">
+                    <div class="image-wrapper">
+                        <img src="public/IC Chip.jpg" alt="IC Chip" class="product-image">
+                        <div class="image-overlay">IC Chip</div>
+                    </div>
+
+                    <h3>IC Chip</h3>
+                    <p class="price">$12.50</p>
+
+                    <button class="buy-btn" onclick="showPopup('IC Chip')">
+                        🛒 Buy
+                    </button>
+                </div>
+
+                <!-- מוצר 4 -->
+                <div class="product-card">
+                    <div class="image-wrapper">
+                        <img src="public/Module.jpg" alt="Module" class="product-image">
+                        <div class="image-overlay">Module</div>
+                    </div>
+
+                    <h3>Module</h3>
+                    <p class="price">$29.99</p>
+
+                    <button class="buy-btn" onclick="showPopup('Module')">
+                        🛒 Buy
+                    </button>
+                </div>
+
+                <!-- מוצר 5 -->
+                <div class="product-card">
+                    <div class="image-wrapper">
+                        <img src="public/Relay.jpg" alt="Relay" class="product-image">
+                        <div class="image-overlay">Relay</div>
+                    </div>
+
+                    <h3>Relay</h3>
+                    <p class="price">$8.99</p>
+
+                    <button class="buy-btn" onclick="showPopup('Relay')">
+                        🛒 Buy
+                    </button>
+                </div>
+
+                <!-- מוצר 6 -->
+                <div class="product-card">
+                    <div class="image-wrapper">
+                        <img src="public/Switch.jpg" alt="Switch" class="product-image">
+                        <div class="image-overlay">Switch</div>
+                    </div>
+
+                    <h3>Switch</h3>
+                    <p class="price">$6.99</p>
+
+                    <button class="buy-btn" onclick="showPopup('Switch')">
+                        🛒 Buy
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= TASK 3 - INTERACTIVE LEADERBOARD TABLE ================= -->
+        <section id="leaderboard" class="section">
+
+            <h2>Top Users Leaderboard</h2>
+
+            <!-- table-card הוא div שעוטף את הטבלה כדי שנוכל לתת לה צל ופינות עגולות -->
+            <div class="table-card">
+
+                <!-- table היא טבלה -->
+                <table>
+
+                    <!-- thead הוא אזור הכותרות של הטבלה -->
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <!-- tbody הוא אזור הנתונים של הטבלה -->
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Shmuel</td>
+                            <td>980</td>
+                            <td>Active</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Daniel</td>
+                            <td>870</td>
+                            <td>Active</td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>Sarah</td>
+                            <td>760</td>
+                            <td>Pending</td>
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td>David</td>
+                            <td>690</td>
+                            <td>Offline</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </section>
+
+
+        <!-- ================= TASK 4 - DASHBOARD WIDGET GRID ================= -->
+        <section id="dashboard" class="section">
+
+            <h2>Dashboard Widget Grid</h2>
+
+            <!-- dashboard-grid הוא הקונטיינר הראשי של ה-Grid -->
+            <div class="dashboard-grid">
+
+                <!-- הווידג׳ט הראשון מיוחד - הטקסט שלו ממורכז בדיוק באמצע -->
+                <div class="widget centered-widget">No New Messages</div>
+
+                <div class="widget">Users Online</div>
+                <div class="widget">Sales Today</div>
+                <div class="widget">New Orders</div>
+                <div class="widget">Tasks</div>
+                <div class="widget">Notifications</div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- ================= POPUP FOR BUY BUTTON ================= -->
+    <!-- הפופאפ מוסתר בהתחלה. כשלוחצים Buy, JavaScript מציג אותו -->
+    <div id="popup" class="popup">
+
+        <!-- הקופסה הלבנה בתוך הפופאפ -->
+        <div class="popup-content">
+
+            <!-- הטקסט הזה יתעדכן לפי המוצר שהמשתמש לחץ עליו -->
+            <p id="popup-text"></p>
+
+            <!-- כפתור לסגירת הפופאפ -->
+            <button class="close-btn" onclick="closePopup()">Close</button>
+
+        </div>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // הפונקציה הזאת מופעלת כשלוחצים על כפתור Buy
+        function showPopup(productName) {
+
+            // מוצא את האלמנט עם id בשם popup-text ומשנה את הטקסט שלו
+            document.getElementById("popup-text").innerText =
+                "🛒 You selected: " + productName;
+
+            // מציג את הפופאפ על המסך
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        // הפונקציה הזאת סוגרת את הפופאפ
+        function closePopup() {
+
+            // מחזיר את הפופאפ למצב מוסתר
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
