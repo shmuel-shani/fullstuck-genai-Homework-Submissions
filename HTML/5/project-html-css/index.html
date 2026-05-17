@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI AGENTS | Command Center Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!--
+        ARCHITECTURE NOTE (CSS Hack):
+        All <input> hack elements must appear BEFORE the elements
+        they control via the ~ (general sibling) combinator.
+        The .overlay is also placed here as a sibling of the inputs,
+        so #nav-agents:checked ~ .overlay works correctly.
+        close (×) buttons use label[for="nav-home"] which re-selects
+        nav-home radio → the overlay condition is false → overlay hides.
+    -->
+
+    <!-- ── HACK INPUTS ─────────────────────────────────── -->
+    <input type="radio" name="main-nav" id="nav-home"       class="hack" checked>
+    <input type="radio" name="main-nav" id="nav-agents"     class="hack">
+    <input type="radio" name="main-nav" id="nav-executions" class="hack">
+    <input type="radio" name="main-nav" id="nav-analytics"  class="hack">
+    <input type="radio" name="main-nav" id="nav-settings"   class="hack">
+
+    <input type="radio" name="chart-filter" id="cf-all"    class="hack" checked>
+    <input type="radio" name="chart-filter" id="cf-blue"   class="hack">
+    <input type="radio" name="chart-filter" id="cf-purple" class="hack">
+    <input type="radio" name="chart-filter" id="cf-green"  class="hack">
+    <input type="radio" name="chart-filter" id="cf-orange" class="hack">
+
+    <input type="checkbox" id="edit-1" class="hack"> <input type="checkbox" id="del-1" class="hack">
+    <input type="checkbox" id="edit-2" class="hack"> <input type="checkbox" id="del-2" class="hack">
+    <input type="checkbox" id="edit-3" class="hack"> <input type="checkbox" id="del-3" class="hack">
+    <input type="checkbox" id="edit-4" class="hack"> <input type="checkbox" id="del-4" class="hack">
+    <input type="checkbox" id="edit-5" class="hack"> <input type="checkbox" id="del-5" class="hack">
+    <input type="checkbox" id="edit-6" class="hack"> <input type="checkbox" id="del-6" class="hack">
+
+    <!-- ── MODALS OVERLAY ──────────────────────────────── -->
+    <div class="overlay">
+
+        <!-- Agents -->
+        <div class="modal-wrap modal-agents">
+            <div class="modal">
+                <div class="modal-head">
+                    <h2>AI Agents Overview</h2>
+                    <label for="nav-home" class="modal-close" aria-label="Close">&times;</label>
+                </div>
+                <p class="modal-body-text">Advanced grid view of all connected agents and their current operational status across all environments.</p>
+                <div class="modal-foot">
+                    <label for="nav-home" class="btn-ghost">Cancel</label>
+                    <label for="nav-home" class="btn-primary">← Back to Home</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executions -->
+        <div class="modal-wrap modal-executions">
+            <div class="modal">
+                <div class="modal-head">
+                    <h2>Executions Tracker</h2>
+                    <label for="nav-home" class="modal-close" aria-label="Close">&times;</label>
+                </div>
+                <p class="modal-body-text">Live feed of all ongoing and completed agent execution logs with real-time status updates.</p>
+                <div class="modal-foot">
+                    <label for="nav-home" class="btn-ghost">Cancel</label>
+                    <label for="nav-home" class="btn-primary">← Back to Home</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="modal-wrap modal-analytics">
+            <div class="modal">
+                <div class="modal-head">
+                    <h2>Data Analytics</h2>
+                    <label for="nav-home" class="modal-close" aria-label="Close">&times;</label>
+                </div>
+                <p class="modal-body-text">Deep-dive performance metrics and trend analysis across all agents and time periods.</p>
+                <div class="modal-foot">
+                    <label for="nav-home" class="btn-ghost">Cancel</label>
+                    <label for="nav-home" class="btn-primary">← Back to Home</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="modal-wrap modal-settings">
+            <div class="modal modal-wide">
+                <div class="modal-head">
+                    <h2>System Settings</h2>
+                    <label for="nav-home" class="modal-close" aria-label="Close">&times;</label>
+                </div>
+                <div class="settings-grid">
+                    <div class="s-row">
+                        <div class="s-key-wrap"><span class="s-key">Theme</span><span class="s-desc">Interface color scheme</span></div>
+                        <select class="field-input s-select"><option>Ultra Dark</option><option>High Contrast</option><option>Cyber Blue</option></select>
+                    </div>
+                    <div class="s-row">
+                        <div class="s-key-wrap"><span class="s-key">Data Refresh</span><span class="s-desc">Polling interval</span></div>
+                        <select class="field-input s-select"><option>Real-time</option><option>Every 5 mins</option><option>Every 30 mins</option></select>
+                    </div>
+                    <div class="s-row">
+                        <div class="s-key-wrap"><span class="s-key">Enable API Access</span><span class="s-desc">Allow external connections</span></div>
+                        <label class="toggle"><input type="checkbox" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
+                    </div>
+                    <div class="s-row">
+                        <div class="s-key-wrap"><span class="s-key">Notifications</span><span class="s-desc">Push alerts for critical events</span></div>
+                        <label class="toggle"><input type="checkbox" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
+                    </div>
+                </div>
+                <div class="modal-foot">
+                    <label for="nav-home" class="btn-ghost">Discard</label>
+                    <label for="nav-home" class="btn-primary">Save Settings</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit -->
+        <div class="modal-wrap modal-edit">
+            <div class="modal modal-sm">
+                <div class="modal-head">
+                    <h2>Edit Agent Task</h2>
+                    <label for="nav-home" class="modal-close" aria-label="Close">&times;</label>
+                </div>
+                <p class="modal-body-text">Update the configuration and parameters for this specific agent task.</p>
+                <div class="modal-foot" style="justify-content:center">
+                    <label for="nav-home" class="btn-ghost">Cancel</label>
+                    <label for="nav-home" class="btn-primary">Save Changes</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete -->
+        <div class="modal-wrap modal-delete">
+            <div class="modal modal-sm">
+                <div class="modal-head">
+                    <h2>Confirm Deletion</h2>
+                    <label for="nav-home" class="modal-close" aria-label="Close">&times;</label>
+                </div>
+                <p class="modal-body-text">This action is <strong class="text-danger">permanent</strong> and cannot be undone. All logs for this agent will be erased.</p>
+                <div class="modal-foot" style="justify-content:center">
+                    <label for="nav-home" class="btn-ghost">Cancel</label>
+                    <label for="nav-home" class="btn-danger">Yes, Delete</label>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /.overlay -->
+
+    <!-- ── MAIN SHELL ───────────────────────────────────── -->
+    <div class="shell">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-inner">
+
+                <div class="brand">
+                    <div class="brand-logo">
+                        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                            <rect width="32" height="32" rx="8" fill="url(#brand-grad)"/>
+                            <path d="M16 7v9l7 4" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M16 16l-7 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2"/>
+                            <circle cx="16" cy="16" r="2.5" fill="#fff"/>
+                            <defs>
+                                <linearGradient id="brand-grad" x1="0" y1="0" x2="32" y2="32">
+                                    <stop offset="0%" stop-color="#3b82f6"/>
+                                    <stop offset="100%" stop-color="#8b5cf6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="brand-copy">
+                        <span class="brand-name">AI AGENTS</span>
+                        <span class="brand-sub">COMMAND CENTER</span>
+                    </div>
+                </div>
+
+                <nav class="nav" aria-label="Main navigation">
+                    <ul>
+                        <li><label for="nav-home"       class="nav-link" data-tooltip="Home"><svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg><span>Home</span></label></li>
+                        <li><label for="nav-agents"     class="nav-link" data-tooltip="Manage Agents"><svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3.5"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6"/><circle cx="15.5" cy="4.5" r="1.5" fill="currentColor" stroke="none"/></svg><span>Agents</span></label></li>
+                        <li><label for="nav-executions" class="nav-link" data-tooltip="Executions"><svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4l12 6-12 6V4z"/></svg><span>Executions</span></label></li>
+                        <li><label for="nav-analytics"  class="nav-link" data-tooltip="Analytics"><svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 15l4-5 4 2 6-7"/></svg><span>Analytics</span></label></li>
+                        <li class="nav-divider"></li>
+                        <li><label for="nav-settings"   class="nav-link" data-tooltip="Settings"><svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="2.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42"/></svg><span>Settings</span></label></li>
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="user-card">
+                        <div class="user-avatar-wrap">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" alt="Alex Chen">
+                            <span class="online-dot" aria-label="Online"></span>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Alex Chen</span>
+                            <span class="user-role">SysAdmin</span>
+                        </div>
+                        <svg class="chevron-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-col">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <div class="search-wrap">
+                        <svg class="search-icon-svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="5.5"/><path d="M16 16l-3.5-3.5"/></svg>
+                        <input type="text" placeholder="Search Agents..." class="search-input" aria-label="Search agents">
+                        <kbd class="search-kbd">⌘K</kbd>
+                        <div class="search-results" role="listbox">
+                            <p class="results-label">Recent</p>
+                            <a href="#" role="option">Agent CR-7 Logs</a>
+                            <a href="#" role="option">Analytics Dashboard</a>
+                            <a href="#" role="option">Failed Tasks Report</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="icon-btn" data-tooltip="Notifications" aria-label="3 Notifications">
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2a6 6 0 0 1 6 6c0 2.5.5 4 2 5H2c1.5-1 2-2.5 2-5a6 6 0 0 1 6-6z"/><path d="M8 16a2 2 0 0 0 4 0"/></svg>
+                        <span class="notif-badge">3</span>
+                    </button>
+                    <div class="topbar-user" data-tooltip="Profile Options">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" alt="Alex Chen" class="topbar-avatar">
+                        <div class="topbar-user-text">
+                            <span class="topbar-name">Alex Chen</span>
+                            <span class="topbar-role">SysAdmin</span>
+                        </div>
+                        <svg class="topbar-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+                    </div>
+                </div>
+            </header>
+
+            <!-- BENTO DASHBOARD -->
+            <main class="bento">
+                <p class="bento-label">Bento Box</p>
+
+                <!--
+                    BENTO GRID — 4 columns, named areas:
+                    Col 1+2 = left stats+logs area
+                    Col 3   = chart (top) + logs (bottom)
+                    Col 4   = form (top-heavy) + activity (bottom)
+
+                    grid-template-areas:
+                    "active  total   chart   form"
+                    "new-ag  new-ag  chart   form"
+                    "logs    logs    logs    form"
+                    "logs    logs    logs    activity"
+                -->
+                <div class="bento-grid">
+
+                    <!-- 1. Active Agents (col1, row1) -->
+                    <article class="card area-active" aria-label="Active Agents">
+                        <div class="stat-header">
+                            <span class="stat-label">Active Agents</span>
+                            <span class="live-dot" aria-label="Live status"></span>
+                        </div>
+                        <span class="stat-num">24</span>
+                        <div class="mini-chart" aria-hidden="true">
+                            <svg viewBox="0 0 120 40" preserveAspectRatio="none">
+                                <defs><linearGradient id="gG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity="0.6"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient></defs>
+                                <path d="M0 32 C15 32 15 20 30 20 S45 28 60 28 S75 10 90 10 S105 18 120 8 V40 H0Z" fill="url(#gG)"/>
+                                <path d="M0 32 C15 32 15 20 30 20 S45 28 60 28 S75 10 90 10 S105 18 120 8" fill="none" stroke="var(--c-green)" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </article>
+
+                    <!-- 2. Total Executions (col2, row1) -->
+                    <article class="card area-total" aria-label="Total Executions">
+                        <div class="stat-header">
+                            <span class="stat-label">Total Executions</span>
+                            <span class="stat-delta up">↑ 12%</span>
+                        </div>
+                        <span class="stat-num">12.5k</span>
+                        <div class="mini-chart" aria-hidden="true">
+                            <svg viewBox="0 0 120 40" preserveAspectRatio="none">
+                                <defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.6"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs>
+                                <path d="M0 30 C15 30 15 22 30 22 S45 14 60 14 S75 20 90 20 S105 6 120 4 V40 H0Z" fill="url(#gB)"/>
+                                <path d="M0 30 C15 30 15 22 30 22 S45 14 60 14 S75 20 90 20 S105 6 120 4" fill="none" stroke="var(--c-blue)" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </article>
+
+                    <!-- 3. Performance Chart (col3, rows 1-2) -->
+                    <article class="card area-chart" aria-label="Performance Trends">
+                        <div class="chart-head">
+                            <div>
+                                <h2 class="card-title">Performance Trends</h2>
+                                <span class="chart-badge">88.05%</span>
+                            </div>
+                            <div class="chart-controls">
+                                <label for="cf-all"    class="cf-btn">All Progress</label>
+                                <label for="cf-blue"   class="cf-dot cf-blue"   data-tooltip="GPT-4o"></label>
+                                <label for="cf-purple" class="cf-dot cf-purple" data-tooltip="Claude 3"></label>
+                                <label for="cf-green"  class="cf-dot cf-green"  data-tooltip="Gemini"></label>
+                                <label for="cf-orange" class="cf-dot cf-orange" data-tooltip="Llama 3"></label>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <div class="y-labels" aria-hidden="true">
+                                <span>100</span><span>80</span><span>60</span><span>40</span><span>20</span><span>0</span>
+                            </div>
+                            <div class="chart-area">
+                                <div class="grid-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+                                <svg viewBox="0 0 600 160" class="chart-svg" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="aBlue"   x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0.02"/></linearGradient>
+                                        <linearGradient id="aPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35"/><stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.02"/></linearGradient>
+                                        <linearGradient id="aGreen"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity="0.35"/><stop offset="100%" stop-color="#10b981" stop-opacity="0.02"/></linearGradient>
+                                        <linearGradient id="aOrange" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f59e0b" stop-opacity="0.35"/><stop offset="100%" stop-color="#f59e0b" stop-opacity="0.02"/></linearGradient>
+                                    </defs>
+                                    <path class="area area-blue"   d="M0 130 C75 130 75 90 150 90 S225 110 300 105 S375 45 450 45 S525 25 600 20 V160 H0Z"/>
+                                    <path class="area area-purple" d="M0 145 C75 145 75 115 150 115 S225 65 300 68 S375 95 450 38 S525 55 600 52 V160 H0Z"/>
+                                    <path class="area area-green"  d="M0 110 C75 110 75 138 150 135 S225 85 300 88 S375 115 450 55 S525 42 600 42 V160 H0Z"/>
+                                    <path class="area area-orange" d="M0 85  C75 85  75 62  150 62  S225 42 300 40 S375 22 450 22 S525 10 600 8  V160 H0Z"/>
+                                    <path class="line line-blue"   d="M0 130 C75 130 75 90 150 90 S225 110 300 105 S375 45 450 45 S525 25 600 20"/>
+                                    <path class="line line-purple" d="M0 145 C75 145 75 115 150 115 S225 65 300 68 S375 95 450 38 S525 55 600 52"/>
+                                    <path class="line line-green"  d="M0 110 C75 110 75 138 150 135 S225 85 300 88 S375 115 450 55 S525 42 600 42"/>
+                                    <path class="line line-orange" d="M0 85  C75 85  75 62  150 62  S225 42 300 40 S375 22 450 22 S525 10 600 8"/>
+                                </svg>
+                                <div class="x-labels" aria-hidden="true">
+                                    <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 4. Create New Agent Form (col4, rows 1-3) -->
+                    <aside class="card area-form" aria-label="Create New Agent">
+                        <div class="form-header">
+                            <h2 class="card-title">Create New Agent</h2>
+                            <span class="form-badge">New</span>
+                        </div>
+                        <form action="https://formspree.io/f/mojyldak" method="POST" class="agent-form" novalidate>
+
+                            <div class="field-group">
+                                <label class="field-label" for="f-name">Agent Name</label>
+                                <div class="field-wrap">
+                                    <input type="text" id="f-name" name="agent_name" class="field-input" placeholder="e.g. Crawler-Alpha" required minlength="2">
+                                    <span class="field-icon valid-icon">✓</span>
+                                    <span class="field-icon invalid-icon">✕</span>
+                                </div>
+                            </div>
+
+                            <div class="field-group">
+                                <label class="field-label" for="f-email">Contact Email</label>
+                                <div class="field-wrap">
+                                    <input type="email" id="f-email" name="email" class="field-input" placeholder="admin@example.com" required>
+                                    <span class="field-icon valid-icon">✓</span>
+                                    <span class="field-icon invalid-icon">✕</span>
+                                </div>
+                            </div>
+
+                            <div class="field-group">
+                                <label class="field-label" for="f-model">Select Model</label>
+                                <select id="f-model" name="model" class="field-input field-select" required>
+                                    <option value="">Choose model…</option>
+                                    <option value="gpt4o">GPT-4o</option>
+                                    <option value="claude3">Claude 3 Opus</option>
+                                    <option value="gemini">Gemini 1.5 Pro</option>
+                                    <option value="llama">Llama 3 70B</option>
+                                    <option value="mistral">Mistral Large</option>
+                                </select>
+                            </div>
+
+                            <div class="field-group">
+                                <label class="field-label" for="f-priority">Priority Level (1–10)</label>
+                                <div class="field-wrap">
+                                    <input type="number" id="f-priority" name="priority" class="field-input" placeholder="5" min="1" max="10" required>
+                                    <span class="field-icon valid-icon">✓</span>
+                                    <span class="field-icon invalid-icon">✕</span>
+                                </div>
+                            </div>
+
+                            <fieldset class="field-group">
+                                <legend class="field-label">Capabilities</legend>
+                                <div class="checks-grid">
+                                    <label class="check-item"><input type="checkbox" name="cap" value="gpt4o" checked><span class="check-box"></span>GPT-4o</label>
+                                    <label class="check-item"><input type="checkbox" name="cap" value="claude" checked><span class="check-box"></span>Claude 3 Opus</label>
+                                    <label class="check-item"><input type="checkbox" name="cap" value="cap"><span class="check-box"></span>Capabilities</label>
+                                    <label class="check-item"><input type="checkbox" name="cap" value="flanming"><span class="check-box"></span>Flanming</label>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="field-group">
+                                <legend class="field-label">Execution Mode</legend>
+                                <div class="radios-row">
+                                    <label class="radio-item"><input type="radio" name="mode" value="auto" checked><span class="radio-dot"></span>Auto</label>
+                                    <label class="radio-item"><input type="radio" name="mode" value="manual"><span class="radio-dot"></span>Manual</label>
+                                    <label class="radio-item"><input type="radio" name="mode" value="scheduled"><span class="radio-dot"></span>Scheduled</label>
+                                </div>
+                            </fieldset>
+
+                            <div class="field-group field-toggle-row">
+                                <span class="field-label">Status</span>
+                                <label class="toggle">
+                                    <input type="checkbox" name="status" value="active" checked>
+                                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                </label>
+                            </div>
+
+                            <div class="field-group">
+                                <label class="field-label" for="f-goal">Goal</label>
+                                <textarea id="f-goal" name="goal" class="field-input field-textarea" placeholder="Describe the agent's objective…" required minlength="10"></textarea>
+                            </div>
+
+                            <button type="submit" class="deploy-btn">
+                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 4l5 4-5 4"/></svg>
+                                Deploy Agent
+                            </button>
+                        </form>
+                    </aside>
+
+                    <!-- 5. Agent New Agents — spans cols 1+2, row 2 -->
+                    <article class="card area-new-agents" aria-label="Quick Agent Creator">
+                        <div class="card-row-head">
+                            <h2 class="card-title">Agent New Agents</h2>
+                            <button class="icon-btn-sm" data-tooltip="More options">
+                                <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="3" cy="8" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="13" cy="8" r="1.2"/></svg>
+                            </button>
+                        </div>
+                        <label class="field-label" for="quick-name">Agent Name</label>
+                        <input type="text" id="quick-name" class="field-input" placeholder="Agent Name...">
+                    </article>
+
+                    <!-- 6. Agent Logs Table — spans cols 1+2+3, rows 3+4 -->
+                    <article class="card area-logs" aria-label="Agent Logs">
+                        <div class="card-row-head">
+                            <h2 class="card-title">Agent Logs</h2>
+                            <div class="logs-search-wrap">
+                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4"/><path d="M12 12l-2.5-2.5"/></svg>
+                                <input type="text" placeholder="Search" class="logs-search" aria-label="Search logs">
+                            </div>
+                        </div>
+                        <div class="table-scroll custom-scroll" role="region" aria-label="Agent logs table">
+                            <table class="logs-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Agent</th>
+                                        <th scope="col">Tasks</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Duration</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><div class="agent-cell"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Agent Setup"><span>Agent Setup</span></div></td>
+                                        <td class="task-text">Ruonirer in this working tasks</td>
+                                        <td><span class="badge badge-running">Running</span></td>
+                                        <td><span class="mono">20:1m</span></td>
+                                        <td><div class="row-actions">
+                                            <button class="ra-btn" data-tooltip="Timeline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></button>
+                                            <button class="ra-btn" data-tooltip="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3H3v10h10v-2M9 3h4v4M9 3l4 4"/></svg></button>
+                                            <label for="edit-1" class="ra-btn" data-tooltip="Edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg></label>
+                                            <label for="del-1"  class="ra-btn ra-del" data-tooltip="Delete"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6 5V3h4v2M6 8v4M10 8v4M4 5l.8 8h6.4L12 5"/></svg></label>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="agent-cell"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Claude 3 Opus"><span>Claude 3 Opus</span></div></td>
+                                        <td class="task-text">Contimarte comontion tasks</td>
+                                        <td><span class="badge badge-complete">Complete</span></td>
+                                        <td><span class="mono">20m 30m</span></td>
+                                        <td><div class="row-actions">
+                                            <button class="ra-btn" data-tooltip="Timeline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></button>
+                                            <button class="ra-btn" data-tooltip="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3H3v10h10v-2M9 3h4v4M9 3l4 4"/></svg></button>
+                                            <label for="edit-2" class="ra-btn" data-tooltip="Edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg></label>
+                                            <label for="del-2"  class="ra-btn ra-del" data-tooltip="Delete"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6 5V3h4v2M6 8v4M10 8v4M4 5l.8 8h6.4L12 5"/></svg></label>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="agent-cell"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" alt="Joera Mason"><span>Joera Mason</span></div></td>
+                                        <td class="task-text">Agent logs advew tasks</td>
+                                        <td><span class="badge badge-running">Running</span></td>
+                                        <td><span class="mono">2m 15m</span></td>
+                                        <td><div class="row-actions">
+                                            <button class="ra-btn" data-tooltip="Timeline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></button>
+                                            <button class="ra-btn" data-tooltip="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3H3v10h10v-2M9 3h4v4M9 3l4 4"/></svg></button>
+                                            <label for="edit-3" class="ra-btn" data-tooltip="Edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg></label>
+                                            <label for="del-3"  class="ra-btn ra-del" data-tooltip="Delete"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6 5V3h4v2M6 8v4M10 8v4M4 5l.8 8h6.4L12 5"/></svg></label>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="agent-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt="Agent Setup"><span>Agent Setup</span></div></td>
+                                        <td class="task-text">Contlinarte fnurtation tasks</td>
+                                        <td><span class="badge badge-complete">Complete</span></td>
+                                        <td><span class="mono">20m 20m</span></td>
+                                        <td><div class="row-actions">
+                                            <button class="ra-btn" data-tooltip="Timeline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></button>
+                                            <button class="ra-btn" data-tooltip="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3H3v10h10v-2M9 3h4v4M9 3l4 4"/></svg></button>
+                                            <label for="edit-4" class="ra-btn" data-tooltip="Edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg></label>
+                                            <label for="del-4"  class="ra-btn ra-del" data-tooltip="Delete"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6 5V3h4v2M6 8v4M10 8v4M4 5l.8 8h6.4L12 5"/></svg></label>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="agent-cell"><img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?w=80&h=80&fit=crop&crop=face" alt="Claude 3 Opus"><span>Claude 3 Opus</span></div></td>
+                                        <td class="task-text">Contimarte- controtion tasks</td>
+                                        <td><span class="badge badge-failed">Failed</span></td>
+                                        <td><span class="mono">1m 23m</span></td>
+                                        <td><div class="row-actions">
+                                            <button class="ra-btn" data-tooltip="Timeline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></button>
+                                            <button class="ra-btn" data-tooltip="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3H3v10h10v-2M9 3h4v4M9 3l4 4"/></svg></button>
+                                            <label for="edit-5" class="ra-btn" data-tooltip="Edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg></label>
+                                            <label for="del-5"  class="ra-btn ra-del" data-tooltip="Delete"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6 5V3h4v2M6 8v4M10 8v4M4 5l.8 8h6.4L12 5"/></svg></label>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="agent-cell"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=80&h=80&fit=crop&crop=face" alt="Aoera Mason"><span>Aoera Mason</span></div></td>
+                                        <td class="task-text">Agent sets this working taccess</td>
+                                        <td><span class="badge badge-failed">Failed</span></td>
+                                        <td><span class="mono">2m 12m</span></td>
+                                        <td><div class="row-actions">
+                                            <button class="ra-btn" data-tooltip="Timeline"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></button>
+                                            <button class="ra-btn" data-tooltip="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3H3v10h10v-2M9 3h4v4M9 3l4 4"/></svg></button>
+                                            <label for="edit-6" class="ra-btn" data-tooltip="Edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg></label>
+                                            <label for="del-6"  class="ra-btn ra-del" data-tooltip="Delete"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6 5V3h4v2M6 8v4M10 8v4M4 5l.8 8h6.4L12 5"/></svg></label>
+                                        </div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="loader-wrap" aria-live="polite">
+                            <div class="spinner" aria-hidden="true"></div>
+                            <span>Syncing live data…</span>
+                        </div>
+                    </article>
+
+                    <!-- 7. Recent Activity — col4, row 4 -->
+                    <aside class="card area-activity" aria-label="Recent Activity">
+                        <div class="card-row-head">
+                            <h2 class="card-title">Recent Activity</h2>
+                            <button class="icon-btn-sm" data-tooltip="View all">
+                                <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="3" cy="8" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="13" cy="8" r="1.2"/></svg>
+                            </button>
+                        </div>
+                        <ul class="activity-list custom-scroll" role="list">
+                            <li class="act-item"><div class="act-avatar act-blue">S</div><div class="act-body"><span class="act-title">Spent</span><span class="act-time">2 months ago</span></div></li>
+                            <li class="act-item"><div class="act-avatar act-green">A</div><div class="act-body"><span class="act-title">Started</span><span class="act-time">3 months ago</span></div></li>
+                            <li class="act-item"><div class="act-avatar act-purple">S</div><div class="act-body"><span class="act-title">Succeed</span><span class="act-time">7 months ago</span></div></li>
+                            <li class="act-item"><div class="act-avatar act-orange">S</div><div class="act-body"><span class="act-title">Started</span><span class="act-time">3 months ago</span></div></li>
+                            <li class="act-item"><div class="act-avatar act-red">E</div><div class="act-body"><span class="act-title">Error on GPT-4</span><span class="act-time">1h ago</span></div></li>
+                            <li class="act-item"><div class="act-avatar act-blue">D</div><div class="act-body"><span class="act-title">Database Backed up</span><span class="act-time">3h ago</span></div></li>
+                        </ul>
+                    </aside>
+
+                </div><!-- /.bento-grid -->
+            </main>
+        </div><!-- /.main-col -->
+    </div><!-- /.shell -->
+
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <label for="nav-home"       class="bn-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg><span>Home</span></label>
+        <label for="nav-agents"     class="bn-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3.5"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6"/></svg><span>Agents</span></label>
+        <label for="nav-executions" class="bn-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4l12 6-12 6V4z"/></svg><span>Run</span></label>
+        <label for="nav-analytics"  class="bn-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 15l4-5 4 2 6-7"/></svg><span>Stats</span></label>
+        <label for="nav-settings"   class="bn-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="2.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2"/></svg><span>Settings</span></label>
+    </nav>
+
+</body>
+</html>
