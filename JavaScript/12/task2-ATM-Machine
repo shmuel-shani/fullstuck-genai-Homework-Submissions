@@ -1,0 +1,57 @@
+class ATM {
+    // 1. משתנה סטטי משותף לכל הכספומטים של הבנק
+    static totalTransactions = 0;
+
+    // 2. הבנאי
+    constructor(bankName, initialBalance) {
+        this.bankName = bankName;
+        this.balance = initialBalance;
+    }
+
+    // 3. פונקציות פרטיות
+    #verifyPin(pin) {
+        if (pin === 1234) {
+            return true;
+        } else {
+            console.log("Wrong PIN");
+            return false;
+        }
+    }
+
+    #updateBalance(amount) {
+        this.balance -= amount; // מוריד את סכום המשיכה מהיתרה
+    }
+
+    #printReceipt(amount) {
+        console.log(`Receipt: withdrew ${amount}. Remaining: ${this.balance}`);
+    }
+
+    // 4. פעולה פומבית - משיכת כספים (הכפתור ללקוח)
+    withdraw(pin, amount) {
+        // שלב א': בדיקת קוד סודי
+        let isPinCorrect = this.#verifyPin(pin);
+        if (isPinCorrect === false) {
+            return; // עוצרים את הפעולה ויוצאים החוצה
+        }
+
+        // שלב ב': בדיקת יתרה
+        if (amount > this.balance) {
+            console.log("Insufficient funds");
+            return; // עוצרים את הפעולה ויוצאים
+        }
+
+        // שלב ג': משיכה בהצלחה
+        this.#updateBalance(amount);
+        this.#printReceipt(amount);
+        
+        // מעלים את מונה העסקאות הכללי ב-1
+        ATM.totalTransactions += 1;
+    }
+}
+
+// בדיקה:
+const myAtm = new ATM("Leumi", 1000); // כספומט עם 1000 שקלים
+
+myAtm.withdraw(9999, 100); // ידפיס: Wrong PIN
+myAtm.withdraw(1234, 5000); // ידפיס: Insufficient funds
+myAtm.withdraw(1234, 200); // משיכה תקינה! ידפיס קבלה עם יתרה 800
