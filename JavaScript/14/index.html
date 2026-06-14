@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>My Website</title>
+</head>
+<body>
+
+    <h1 id="title">JavaScript is awesome<span style="display:none;"> — hidden text</span></h1>
+    <h2 id="subtitle"></h2>
+
+    <ul>
+      <li class="item">HTML</li>
+      <li class="item">CSS</li>
+      <li class="item">JavaScript</li>
+      <li class="item">React</li>
+    </ul>
+
+    <form>
+      <div>
+        <label for="username">Username</label>
+        <input type="text" id="username">
+      </div>
+      <input type="button" value="Submit" id="submit-btn">
+    </form>
+
+
+    <script>
+        
+        // =====================================
+        // חלק 1 - The Document Object (מנהל העבודה)
+        // =====================================
+        
+        // 1. משנה את שם הלשונית של הדפדפן לשם שלך
+        document.title = "Shmuel Shani";
+
+        // 2. מוצא את תגית הסקריפט הראשונה דרך ה-body של האתר
+        let firstScript = document.body.getElementsByTagName("script")[0];
+
+        // מדפיסים את השם של התגית (ידפיס: SCRIPT)
+        console.dir(firstScript.tagName);
+
+        // 3. יצירת פונקציית היכרות שמשתמשת בחיבור מילים (Template Literal - גרשיים אלכסוניים)
+        // בונים את הפונקציה שמקבלת שני נתונים: מילת ברכה ושם
+        function introduce(greeting, name) {
+            // מדפיסים משפט שלם - הגרשיים האלכסוניים מאפשרים לנו לשתול את המשתנים עם סימן הדולר
+            console.log(`${greeting}, my name is ${name}!`);
+        }
+        // מפעילים את המכונה ומכניסים לה מילים שאנחנו בוחרים
+        introduce("Welcome", "Shmuel");
+
+
+        // =====================================
+        // חלק 2 - getElementById (תעודת זהות)
+        // =====================================
+        
+        // 4. תופסים את הכותרת הראשית לפי תעודת הזהות שלה ומדפיסים לקונסול
+        let myTitle = document.getElementById("title");
+        // מדפיסים את המפרט הטכני שלה לקונסול
+        console.dir(myTitle);
+
+        // בסעיפים הבאים (5, 6 ו-7), מבקשים לעשות כל מיני דברים באלמנט 
+        // subtitle 
+        // כדי לשנות את האלמנט, קודם כל חייבים לתפוס את האלמנט ביד
+        // תופסים את הכותרת המשנית (הריקה) כדי שנוכל למלא אותה
+        let mySubtitle = document.getElementById("subtitle");
+
+        // 5. אם נשתמש ב- innerText:
+        // מעתיק את הטקסט מהכותרת הראשית למשנית
+        mySubtitle.innerText = myTitle.innerText;
+        /*
+        The hidden text does NOT appear.
+        Why? Because 'innerText' only reads what is visually visible on the screen. 
+        Since the span has 'display: none', 'innerText' ignores it.
+        */
+        /*
+           תשובה - הטקסט המוסתר *לא* מופיע! 
+           למה? כי 
+           innerText
+           חכם - הוא שואב רק את הטקסט שהעין האנושית רואה על המסך באותו רגע, ומתעלם ממה שמוסתר בעזרת 
+           CSS (display: none).
+        */
+
+        // 6. אבל אם נשתמש ב- innerHTML:
+        mySubtitle.innerHTML = myTitle.innerHTML;
+        /*
+        What is different now? 
+        Now, the hidden HTML tags (the span) WERE copied over!
+        'innerHTML' acts like a robot that copies the raw code exactly as it is, including hidden elements, while 'innerText' only copies visible text.
+        */
+        /*
+           תשובה לשאלה: עכשיו הטקסט המוסתר הועתק! 
+           למה? כי 
+           innerHTML
+            לא מסתכל על מה שרואים בעיניים, הוא פשוט מעתיק את *כל* קוד ה-
+            HTML
+            שנמצא בפנים כמו רובוט 
+            (כולל תגית ה-span המוסתרת).
+        */
+
+        // 7. נוסיף עיצוב דרך JS
+        /*
+         - נזכיר שכבר תפסנו את האלמנט מקודם, בשורה הזו
+         let mySubtitle = document.getElementById("subtitle");
+         עכשיו נשנה את צבע הרקע כאשר נקפיד על חוק 
+         CamelCase - backgroundColor
+         ולא
+         background-color
+         */
+        
+        // משנים את צבע הרקע
+        mySubtitle.style.backgroundColor = "lightblue";
+        // מוסיפים את המסגרת השמאלית הכתומה
+        mySubtitle.style.borderLeft = "4px solid orange";
+
+
+        // =====================================
+        // חלק 3 - ClassName & TagName (חיפוש קבוצתי)
+        // =====================================
+        
+        // 8. תופסים את כל הפריטים שיש להם את הקלאס "item" ושומרים אותם במשתנה
+        let itemsList = document.getElementsByClassName("item");
+        // מדפיסים את מה שתפסנו לקונסול כדי לראות מה קיבלנו
+        console.log(itemsList); 
+        /* תשובה לשאלה: זה *לא* בדיוק מערך רגיל, זה נקרא 
+        "HTMLCollection".
+        אבל הוא מתנהג דומה ויש בו 4 איברים.
+        מערך רגיל (Array) הוא כמו רשימת קניות שכתובה על דף נייר.
+        לעומת זאת, 
+         HTMLCollection 
+         הוא כמו מצלמת אבטחה בשידור חי. 
+         אם עכשיו נוסיף עוד פריט ל HTML- דרך הקוד,
+         המצלמה תראה אותו מיד והרשימה שלנו תתעדכן אוטומטית ל-5. 
+         בנוסף, בגלל שזה לא מערך אמיתי, 
+         אין לו את כל כלי העבודה המיוחדים של מערכים שלמדנו עליהם (כמו פונקציית filter  או push) 
+         אבל עדיין אפשר לעבור עליו אחד-אחד בעזרת לולאתfor  רגילה (כמו שנעשה בסעיף הבא).
+        */
+        /*
+        Answers:
+        Is it an array? No, it is an "HTMLCollection" (a live collection of elements).
+        How many items? There are 4 items in it.
+        */
+
+        // 9. נעבור עליהם אחד-אחד בלולאה רגילה ונצבע אותם בכחול כהה
+        // אנחנו יוצרים לולאה שמתחילה מ-0 (הפריט הראשון), ורצה עד סוף הרשימה
+        for (let i = 0; i < itemsList.length; i++) {
+            // בכל סיבוב של הלולאה, אנחנו פונים לפריט התורן (itemsList[i])
+            // וניגשים ל-style שלו כדי לצבוע את הטקסט
+            itemsList[i].style.color = "darkblue";
+            
+            // 10. בתוך אותה הלולאה, נוסיף מסגרת *רק* לאיבר שבאינדקס 1 (שזה CSS, כי סופרים מאפס)
+            // אנחנו שואלים את המחשב: האם אנחנו נמצאים עכשיו בפריט מספר 1?
+            if (i === 1) {
+                // אם כן, תוסיף לו מסגרת אפורה
+                itemsList[i].style.border = "2px solid gray";
+            }
+        }
+
+        // 11. נחליף את התוכן של האיבר האחרון (React) בקישור לחיץ
+        // אז - כשאנחנו כבר מחוץ ללולאה הולכים לרשימה - 
+        // מבקשים את האינדקס האחרון (אורך הרשימה פחות 1)
+        // ומשתילים בתוכו את קוד ה-
+        // HTML 
+        //  שנתון של הקישור שנתון בסעיף
+        itemsList[itemsList.length - 1].innerHTML = '<a href="https://react.dev" target="_blank">React Docs</a>';
+
+
+        // 12. עכשיו נתפוס את כולם שוב, הפעם לפי תגית (li), ונשתמש בלולאת for...of
+        // תופסים את כל פריטי הרשימה (li) באתר ושומרים אותם בקופסה
+        let allListTags = document.getElementsByTagName("li");
+        // משתמשים בלולאת for...of החדשה:
+        // המשמעות: "עבור כל 
+        // (singleItem)
+        //  בתוך (allListTags)"
+        for (let singleItem of allListTags) {
+            // בכל סיבוב, 
+            // singleItem 
+            // מכיל את הפריט הנוכחי (הראשון, ואז השני, וכו')
+            // אנחנו פשוט צובעים את הרקע שלו בצהוב בהיר
+            singleItem.style.backgroundColor = "lightyellow";
+        }
+
+
+        // =====================================
+        // חלק 4 - Events (החיישנים)
+        // =====================================
+
+        // 13. קודם כל - תופסים את הכפתור ושומרים אותו אצלנו ביד
+        let submitBtn = document.getElementById("submit-btn");
+        
+        // שלב ראשון: מכינים את הפונקציה (סדרת הפעולות שתקרה בעתיד)
+        function handleClick1() {
+            console.log("Button was clicked!");
+        }
+        // שלב שני: מדביקים את החיישן על הכפתור
+        // המשמעות: "כפתור יקר, תאזין (addEventListener) לאירוע לחיצה ('click').
+        // כשמישהו לוחץ עליך - תפעיל את הפונקציה handleClick".
+        // =====================================
+        // כיביתי את הפעלת החיישן הזה (הפכתי להערה), כי התבקשנו בסעיף 14 *לשנות* את סוג האירוע ולא להוסיף עליו
+        // submitBtn.addEventListener("click", handleClick1);
+        
+
+        // 14. אנחנו פשוט הולכים לשורה שכתבנו בסעיף הקודם, ומשנים מילה אחת בלבד 
+        // (מ-"click" ל-"mouseenter")
+        submitBtn.addEventListener("mouseenter", handleClick1);
+        /*
+        Difference:
+        "click" triggers ONLY when the user actively presses the mouse button.
+        "mouseenter" triggers automatically the moment the mouse cursor hovers over the button, even without clicking.
+        */
+        /*
+        ההבדל - 
+        "click" מופעל רק כאשר המשתמש לוחץ באופן פעיל על כפתור העכבר.
+        "mouseenter" מופעל אוטומטית ברגע שסמן העכבר מרחף מעל הכפתור, גם ללא לחיצה.
+        */
+
+        // 15. אנחנו חוזרים לפונקציה 
+        // handleClick1
+        // שיצרנו בסעיף 13, ומעדכנים אותה 
+        // קראתי לה handleClick2
+        // כדי לשמור על הדרך והשלבים לפתרון 
+        function handleClick2() {     
+        // קודם כל - תופסים את תיבת הטקסט ושומרים אותה אצלנו ביד
+        let usernameInput = document.getElementById("username");
+        
+        // שואבים מתוך התיבה את הערך (מה שהמשתמש הקליד בפנים באותו רגע!)
+        let typedName = usernameInput.value; // קוראים את מה שהמשתמש הקליד בתוך תיבת הטקסט (בעזרת המילה value)
+        
+        // מדפיסים לקונסול בעזרת גרשיים אלכסוניים (Template literal) כדי לשתול את השם במשפט
+        console.log(`Hello, ${typedName}!`); // מדפיס: שלום, [השם שהוקלד]
+        }
+        // מדביקים את החיישן מסוג 'כניסת עכבר' ומחברים אותו לפונקציה החדשה
+        submitBtn.addEventListener("mouseenter", handleClick2);
+
+       
+        // 16. בונוס: חיישן עזיבת עכבר (mouseleave)
+        // כשהעכבר יוצא מהשטח של הכפתור, נצבע אותו בכתום (coral)
+        // אנחנו ניגשים לאותו 
+        // submitBtn 
+        // ממקודם ומדביקים לו חיישן נוסף:
+        submitBtn.addEventListener("mouseleave", function() {
+            // הפונקציה הזו תופעל רק כשהעכבר *ייצא* מהכפתור.
+            // היא פונה לעיצוב של הכפתור, ומשנה את צבע הרקע שלו לכתום.
+            submitBtn.style.backgroundColor = "coral";
+        });
+
+    </script>
+</body>
+</html>
